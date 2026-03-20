@@ -387,7 +387,7 @@ ProyectoLibro/
 │   └── package.json
 │
 ├── docker-compose.yml
-└── .env
+└── .env.example
 ```
 
 ---
