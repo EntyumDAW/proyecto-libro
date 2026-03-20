@@ -1,0 +1,265 @@
+generator client {
+  provider        = "prisma-client-js"
+  previewFeatures = ["views"]
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model usuario {
+  id                        Int              @id @default(autoincrement())
+  nombre_usuario            String           @unique @db.VarChar(100)
+  nombre                    String?          @db.VarChar(200)
+  direccion                 String?          @db.VarChar(200)
+  ciudad                    String?          @db.VarChar(100)
+  provincia                 String?          @db.VarChar(100)
+  codigo_postal             Int?
+  fecha_registro            DateTime         @default(now()) @db.Timestamptz(6)
+  password                  String           @db.VarChar(100)
+  telefono                  String?          @db.VarChar(100)
+  email                     String           @unique @db.VarChar(100)
+  dni                       String?          @unique @db.VarChar(100)
+  rol                       roles            @default(usuario)
+  avatar_url                String?          @db.VarChar(100)
+  verificado                Boolean          @default(false)
+  anuncio                   anuncio[]
+  ejemplares                ejemplares[]
+  notificaciones            notificaciones[]
+  transacciones_oferente    transacciones[]  @relation("Oferente")
+  transacciones_solicitante transacciones[]  @relation("Solicitante")
+  // Nuevas relaciones para favoritos y mensajería
+  favoritos                 favorito[]
+  conversaciones_usuario1   conversacion[]   @relation("Conversacion1")
+  conversaciones_usuario2   conversacion[]   @relation("Conversacion2")
+  mensajes_enviados         mensaje[]        @relation("MensajeRemitente")
+}
+
+model libros {
+  id                  Int                   @id @default(autoincrement())
+  isbn                String?               @unique @db.VarChar(100)
+  titulo              String                @db.VarChar(500)
+  autor               String                @db.VarChar(300)
+  sinopsis            String                @db.Text
+  año_publicacion    Int?
+  editorial           String?               @db.VarChar(300)
+  portada_url         String                @db.VarChar(500)
+  ejemplares          ejemplares[]
+  intercambio_deseado intercambio_deseado[]
+  libro_categoria     libro_categoria[]
+}
+
+model ejemplares {
+  id                       Int               @id @default(autoincrement())
+  descripcion_estado       String?           @db.Text
+  stock                    Int?
+  precio                   Int?
+  fecha_registro           DateTime          @default(now()) @db.Timestamptz(6)
+  libro                    Int
+  propietario              Int
+  estado                   estado_ejemplares
+  condicion                condicion
+  anuncio                  anuncio[]
+  libro_id                 libros            @relation(fields: [libro], references: [id])
+  propietario_id           usuario           @relation(fields: [propietario], references: [id])
+  transacciones_ofrecido   transacciones[]   @relation("Ofrecido")
+  transacciones_solicitado transacciones[]   @relation("Solicitado")
+}
+
+model anuncio {
+  id                  Int                   @id @default(autoincrement())
+  titulo              String                @db.VarChar(500)
+  descripcion         String                @db.Text
+  fecha_creacion      DateTime              @default(now()) @db.Timestamptz(6)
+  fecha_expiracion    DateTime              @db.Timestamptz(6)
+  lugar_recogida      String?               @db.VarChar(300)
+  metodo_pago         String?               @db.VarChar(200)
+  permite_envio       Boolean               @default(false)
+  precio_envio        Decimal?
+  acepta_otros        Boolean               @default(false)
+  ejemplar            Int
+  usuario             Int
+  estado              estado_anuncio
+  tipo                tipos_anuncio
+  ejemplar_id         ejemplares            @relation(fields: [ejemplar], references: [id])
+  usuario_id          usuario               @relation(fields: [usuario], references: [id])
+  intercambio_deseado intercambio_deseado[]
+  transacciones       transacciones[]
+}
+
+model intercambio_deseado {
+  id            Int     @id @default(autoincrement())
+  acepta_otros  Boolean @default(false)
+  anuncio       Int
+  libro_deseado Int
+  anuncio_id    anuncio @relation(fields: [anuncio], references: [id], onDelete: Cascade)
+  libro         libros  @relation(fields: [libro_deseado], references: [id])
+}
+
+model transacciones {
+  id                   Int                @id @default(autoincrement())
+  precio_acordado      Decimal?
+  fecha_creacion       DateTime           @default(now()) @db.Timestamptz(6)
+  fecha_actualizacion  DateTime           @updatedAt @db.Timestamptz(6)
+  comentarios          String?            @db.VarChar(100)
+  metodo_pago_garantia String?            @db.VarChar(100)
+  importe_garantia     Decimal?
+  solicitante            Int
+  oferente               Int
+  anuncio                Int
+  ejemplar_solicitado    Int
+  ejemplar_ofrecido      Int?
+  tipo                   tipos_anuncio
+  estado                 estado_transaccion
+  // Confirmaciones independientes de cada parte para completar la transacción
+  confirmado_oferente    Boolean            @default(false)
+  confirmado_solicitante Boolean            @default(false)
+  anuncio_id           anuncio            @relation(fields: [anuncio], references: [id], onDelete: Cascade)
+  ejemplar_ofrece      ejemplares?        @relation("Ofrecido", fields: [ejemplar_ofrecido], references: [id])
+  ejemplar_solicita    ejemplares         @relation("Solicitado", fields: [ejemplar_solicitado], references: [id])
+  oferente_id          usuario            @relation("Oferente", fields: [oferente], references: [id])
+  solicitante_id       usuario            @relation("Solicitante", fields: [solicitante], references: [id])
+  transporte           transporte?
+}
+
+model categorias {
+  id                 Int               @id @default(autoincrement())
+  nombre             String            @db.VarChar(100)
+  descripcion        String?           @db.VarChar(200)
+  categoria_padre    Int?
+  categoria_padre_id categorias?       @relation("SubCategorias", fields: [categoria_padre], references: [id])
+  subcategorias      categorias[]      @relation("SubCategorias")
+  libro_categoria    libro_categoria[]
+}
+
+model libro_categoria {
+  id           Int        @id @default(autoincrement())
+  libro_id     Int
+  categoria_id Int
+  categoria    categorias @relation(fields: [categoria_id], references: [id])
+  libro        libros     @relation(fields: [libro_id], references: [id])
+}
+
+model transporte {
+  id                     Int           @id @default(autoincrement())
+  numero_seguimiento     String?       @db.VarChar(100)
+  empresa_transporte     String?       @db.VarChar(100)
+  direccion_origen       String        @db.VarChar(200)
+  dirección_destino     String        @db.VarChar(200)
+  fecha_envio            DateTime?     @db.Timestamptz(6)
+  fecha_entrega_estimada DateTime?     @db.Timestamptz(6)
+  fecha_entrega_real     DateTime?     @db.Timestamptz(6)
+  coste_envio            Decimal
+  transaccion            Int           @unique
+  estado_envio           estado_envio
+  transaccion_id         transacciones @relation(fields: [transaccion], references: [id])
+}
+
+model notificaciones {
+  id             Int                 @id @default(autoincrement())
+  mensaje        String?             @db.VarChar(500)
+  leida          Boolean             @default(false)
+  enlace         String?             @db.VarChar(200)
+  fecha_creacion DateTime            @default(now()) @db.Timestamptz(6)
+  usuario        Int
+  tipo           tipo_notificaciones
+  usuario_id     usuario             @relation(fields: [usuario], references: [id])
+}
+
+enum roles {
+  usuario
+  admin
+}
+
+enum estado_ejemplares {
+  disponible
+  reservado
+  vendido
+  intercambiado
+}
+
+enum condicion {
+  nuevo
+  como_nuevo
+  buen_estado
+  regular
+}
+
+enum tipos_anuncio {
+  venta
+  intercambio
+}
+
+enum estado_anuncio {
+  activo
+  completado
+  cancelado
+}
+
+enum estado_transaccion {
+  pendiente
+  aceptada
+  rechazada
+  completada
+  cancelada
+}
+
+enum estado_envio {
+  pendiente
+  en_transito
+  entregado
+  con_retraso
+}
+
+enum tipo_notificaciones {
+  intercambio_solicitado
+  libro_disponible
+  transaccion_actualizada
+}
+
+// Modelo para guardar libros favoritos de cada usuario
+// libro_ref puede ser el ISBN o el ID de Google Books si no hay ISBN
+model favorito {
+  id          Int      @id @default(autoincrement())
+  usuario     Int
+  libro_ref   String   @db.VarChar(200)
+  titulo      String   @db.VarChar(200)
+  autor       String   @db.VarChar(200)
+  portada_url String   @db.VarChar(500)
+  fecha       DateTime @default(now()) @db.Timestamptz(6)
+  usuario_id  usuario  @relation(fields: [usuario], references: [id])
+
+  // Un usuario no puede tener el mismo libro dos veces en favoritos
+  @@unique([usuario, libro_ref])
+}
+
+// Modelo para las conversaciones entre dos usuarios (mensajería)
+model conversacion {
+  id           Int        @id @default(autoincrement())
+  usuario1     Int
+  usuario2     Int
+  // ID de transacción relacionada (opcional, para contexto en intercambios/ventas)
+  transaccion  Int?
+  fecha_inicio DateTime   @default(now()) @db.Timestamptz(6)
+  usuario1_id  usuario    @relation("Conversacion1", fields: [usuario1], references: [id])
+  usuario2_id  usuario    @relation("Conversacion2", fields: [usuario2], references: [id])
+  mensajes     mensaje[]
+
+  // Solo puede existir una conversación entre dos usuarios concretos
+  // Siempre guardamos el de menor ID como usuario1 para garantizar unicidad
+  @@unique([usuario1, usuario2])
+}
+
+// Modelo para los mensajes dentro de una conversación (contenido cifrado)
+model mensaje {
+  id               Int          @id @default(autoincrement())
+  conversacion_id  Int
+  remitente        Int
+  // Contenido cifrado con AES-256-CBC en el servidor
+  contenido        String       @db.Text
+  leido            Boolean      @default(false)
+  fecha            DateTime     @default(now()) @db.Timestamptz(6)
+  conversacion     conversacion @relation(fields: [conversacion_id], references: [id], onDelete: Cascade)
+  remitente_id     usuario      @relation("MensajeRemitente", fields: [remitente], references: [id])
+}

@@ -1,0 +1,91 @@
+# ==========================================
+# ENVIRONMENT & SECRETS — NEVER COMMIT
+# ==========================================
+.env
+.env.*
+!.env.example
+!.env.*.example
+
+# ==========================================
+# DEPENDENCIES
+# ==========================================
+node_modules/
+**/node_modules/
+
+# ==========================================
+# DATABASE VOLUME (PostgreSQL data dir)
+# ==========================================
+docker_test_db/
+
+# ==========================================
+# BUILD OUTPUT
+# ==========================================
+dist/
+build/
+**/dist/
+**/build/
+
+# ==========================================
+# PRISMA — BINARY ENGINES (platform-specific)
+# ==========================================
+backend/node_modules/.prisma/
+*.dylib.node
+*.dll.node
+*.so.node
+query_engine-*
+schema-engine-*
+libquery_engine-*
+
+# ==========================================
+# LOGS
+# ==========================================
+logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# ==========================================
+# VITE CACHE
+# ==========================================
+frontend/node_modules/.vite/
+
+# ==========================================
+# OS FILES
+# ==========================================
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+
+# ==========================================
+# CLAUDE CODE (local config)
+# ==========================================
+.claude/
+
+# ==========================================
+# EDITOR / IDE
+# ==========================================
+.vscode/
+.idea/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# ==========================================
+# MISC
+# ==========================================
+*.pem
+*.key
+*.cert
+*.p12
+.cache/
+coverage/
+.nyc_output/
