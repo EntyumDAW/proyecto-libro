@@ -16,7 +16,7 @@ export const Home = ({searchQuery}) => {
         // Ponemos la carga en true
         setLoading(true);
         // Primero cargamos los libros por defecto con una query
-        searchBooksGoogle('harry potter')
+        searchBooksGoogle('brandon sanderson')
             .then(res => {setLibros(res); setPage(1)})
             .catch(err => setError(err.response?.data?.error || err.message))
             .finally(() => setLoading(false))
