@@ -17,8 +17,7 @@ const app = express();
 
 // Iniciamos cors y las opciones disponibles
 const allowedOrigins = [
-    'http://localhost:5173',
-    'http://localhost:5174',
+    'https://proyecto-libro-frontend.onrender.com',
     process.env.FRONTEND_URL
 ].filter(Boolean);
 
