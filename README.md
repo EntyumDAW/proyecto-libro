@@ -12,7 +12,7 @@ A full-stack web application for buying, selling, and exchanging second-hand boo
 
 | Home | Listings | Book Detail | Notifications |
 |------|----------|-------------|---------------|
-| ![Home](docs/screenshots/home.png) | ![Listings](docs/screenshots/listings.png) | ![Book Detail](docs/screenshots/book-detail.png) | ![Notifications](docs/screenshots/notifications.png) |
+| ![Home](docs/screenshots/page-home.png) | ![Listings](docs/screenshots/listings.png) | ![Book Detail](docs/screenshots/book-detail.png) | ![Notifications](docs/screenshots/notifications.png) |
 
 | Transactions | Messages | My Account |
 |--------------|----------|------------|
