@@ -1,5 +1,12 @@
 # BookSwap — Book Exchange Platform
 
+**[Live Demo](https://proyecto-libro-frontend.onrender.com)** · 
+**[Backend API](https://proyecto-libro-backend.onrender.com/health)**
+
+The backend runs on Render's free tier and may take ~30 seconds to wake up on first request.
+
+---
+
 A full-stack web application for buying, selling, and exchanging second-hand books between users. Built with React, Node.js/Express, PostgreSQL and Docker.
 
 > **Portfolio project** — showcases a complete REST API, JWT authentication, real-time messaging, encrypted data storage, and a fully containerised deployment.
@@ -8,8 +15,6 @@ A full-stack web application for buying, selling, and exchanging second-hand boo
 
 ## Screenshots
 
-> Add your own screenshots by replacing the paths below. Recommended: Home, Listings, Book Detail, Transactions, Messages.
-
 | Home | Listings | Book Detail | Notifications |
 |------|----------|-------------|---------------|
 | ![Home](docs/screenshots/page-home.png) | ![Listings](docs/screenshots/listings.png) | ![Book Detail](docs/screenshots/book-detail.png) | ![Notifications](docs/screenshots/notifications.png) |
@@ -17,8 +22,6 @@ A full-stack web application for buying, selling, and exchanging second-hand boo
 | Transactions | Messages | My Account |
 |--------------|----------|------------|
 | ![Transactions](docs/screenshots/transactions.png) | ![Messages](docs/screenshots/messages.png) | ![Account](docs/screenshots/account.png) |
-
-> **How to add screenshots:** Create a `docs/screenshots/` folder in the repo root, take screenshots of each page and save them with the names above.
 
 ---
 
@@ -243,7 +246,7 @@ All endpoints are prefixed with `/api`.
 ### 1. Clone the repository
 
 ```bash
-git clone https://github.com/your-username/ProyectoLibro.git
+git clone https://github.com/EntyumDAW/proyecto-libro
 cd ProyectoLibro
 ```
 
@@ -308,9 +311,7 @@ Tests use **Vitest** in both frontend and backend. Repositories and external API
 
 ```bash
 cd backend
-npm test                  # Run once
-npm run test:watch        # Watch mode
-npm run test:coverage     # Coverage report
+npm test                 
 ```
 
 Covers:
@@ -325,8 +326,6 @@ Covers:
 ```bash
 cd frontend
 npm test
-npm run test:watch
-npm run test:coverage
 ```
 
 Covers:
@@ -405,4 +404,6 @@ ProyectoLibro/
 
 ## License
 
-This project is for portfolio and educational purposes.
+Copyright (c) 2025 Antonio Armero Muñoz. All rights reserved.
+
+This project and its source code are publicly visible for portfolio and educational purposes only. No part of this project may be copied, modified, distributed, or used in any form without the express written permission of the author.
