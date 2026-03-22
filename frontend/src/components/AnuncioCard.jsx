@@ -20,8 +20,11 @@ export const AnuncioCard = ({anuncio}) => {
                 <Typography variant='h6' noWrap>{anuncio.ejemplar_id.libro_id.titulo}</Typography>
                 <Typography variant='body2' color='text.secondary' noWrap>{anuncio.ejemplar_id.libro_id.autor}</Typography>
                 <Chip
-                label={traducir(anuncio.estado)}
-                color={anuncio.estado === 'activo' ? 'success' : anuncio.estado === 'completado' ? 'primary' : 'default'}/>
+                    label={`${anuncio.tipo === 'venta' ? 'Sale' : 'Exchange'} · ${anuncio.ejemplar_id.precio != null ? `${anuncio.ejemplar_id.precio}€` : 'No price'}`}
+                    color={anuncio.tipo === 'venta' ? 'warning' : 'info'}
+                    size="small"
+                    sx={{mt: 0.5}}
+                />
             </CardContent>
             </CardActionArea>
     </Card>
