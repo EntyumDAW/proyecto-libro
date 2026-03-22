@@ -10,9 +10,9 @@ A full-stack web application for buying, selling, and exchanging second-hand boo
 
 > Add your own screenshots by replacing the paths below. Recommended: Home, Listings, Book Detail, Transactions, Messages.
 
-| Home | Listings | Book Detail |
-|------|----------|-------------|
-| ![Home](docs/screenshots/home.png) | ![Listings](docs/screenshots/listings.png) | ![Book Detail](docs/screenshots/book-detail.png) |
+| Home | Listings | Book Detail | Notifications |
+|------|----------|-------------|---------------|
+| ![Home](docs/screenshots/home.png) | ![Listings](docs/screenshots/listings.png) | ![Book Detail](docs/screenshots/book-detail.png) | ![Notifications](docs/screenshots/notifications.png) |
 
 | Transactions | Messages | My Account |
 |--------------|----------|------------|
