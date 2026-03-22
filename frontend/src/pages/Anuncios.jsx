@@ -70,7 +70,7 @@ export const Anuncios = () => {
                     md: 'repeat(4, 200px)',
                 },
                 gap: 3,
-                justifyContent: 'center',
+                justifyContent: 'flex-start',
             }}>
                 {anuncios
                     .slice((page - 1) * ITEMS_POR_PAGINA, page * ITEMS_POR_PAGINA)
