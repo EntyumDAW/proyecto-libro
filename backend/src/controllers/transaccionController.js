@@ -14,24 +14,24 @@ export const createTransaccion = async (req, res) => {
         const anuncio = await findById(anuncioId);
         
         // Validacion para comprobar si el anuncio está activo
-        if (anuncio.estado !== 'activo') throw new Error('El anuncio no está acivo');
+        if (anuncio.estado !== 'activo') throw new Error('The listing is not active');
         
         const usuario = req.user.id;
         // Validacion para comprobar si al solicitar un anuncio tú eres el creador del mismo
-        if (usuario === anuncio.usuario) throw new Error('No puedes solicitar tu propio anuncio');
+        if (usuario === anuncio.usuario) throw new Error('You cannot request your own listing');
         
         // Si es intercambio, comprobamos que ejemplar ofrecido existe y que pertenece al usuario
         if (anuncio.tipo === 'intercambio') {
             const ejemplar = await findIdEjemplar(ejemplarOfrecido);
             if (!ejemplar || usuario != ejemplar.propietario) {
-                throw new Error('Este ejemplar no te pertenece');
+                throw new Error('This book does not belong to you');
             }
             
             // Comprobamos si el anuncio acepta otros libros o si el ofrecido está dentro de los solicitados
             const libroAceptado = anuncio.intercambio_deseado.find(
                 ic => ic.libro_deseado === ejemplar.libro
             );
-            if (!anuncio.acepta_otros && !libroAceptado) throw new Error ('El libro ofrecido no es aceptado por el anunciante');
+            if (!anuncio.acepta_otros && !libroAceptado) throw new Error ('The offered book is not accepted by the seller');
         }
         
         // Creamos objeto de transaccion
@@ -56,7 +56,7 @@ export const createTransaccion = async (req, res) => {
         const dataNotificacion = {
             tipo: 'intercambio_solicitado',
             usuario: anuncio.usuario,
-            mensaje: "Nueva solicitud de transacción para tu anuncio",
+            mensaje: "New transaction request for your listing",
             enlace: `/anuncios/${anuncio.id}`
         }
         await createNotificacion(dataNotificacion);
@@ -80,10 +80,10 @@ export const aceptarTransaccion = async (req, res) => {
         
         // Validamos si el usuario es el oferente en la transaccion
         const usuario = req.user.id;
-        if (usuario !== transaccion.oferente) throw new Error('No autorizado');
+        if (usuario !== transaccion.oferente) throw new Error('Not authorized');
         
         // Si la transaccion no está en pendiente, da error al intentar aceptarla
-        if (transaccion.estado !== 'pendiente') throw new Error('La transacción no está disponible');
+        if (transaccion.estado !== 'pendiente') throw new Error('The transaction is not available');
 
         // Actualizamos la transaccion si las validaciones han pasado
         const transaccionActualizada = await update(transaccionId, 'aceptada')
@@ -95,7 +95,7 @@ export const aceptarTransaccion = async (req, res) => {
         const dataNotificacion = {
             tipo: 'transaccion_actualizada',
             usuario: transaccion.solicitante,
-            mensaje: "Tu solicitud ha sido aceptada",
+            mensaje: "Your request has been accepted",
             enlace: `/anuncios/${transaccion.anuncio}`
         }
         await createNotificacion(dataNotificacion);
@@ -120,8 +120,8 @@ export const cancelarTransaccion = async (req, res) => {
 
         
         // Validamos si el usuaruo es el oferente y si la transacción está pendiente
-        if (usuario !== transaccion.oferente && usuario !== transaccion.solicitante) throw new Error('No autorizado');
-        if (transaccion.estado !== 'pendiente' && transaccion.estado !== 'aceptada') throw new Error('La transacción no se puede cancelar');
+        if (usuario !== transaccion.oferente && usuario !== transaccion.solicitante) throw new Error('Not authorized');
+        if (transaccion.estado !== 'pendiente' && transaccion.estado !== 'aceptada') throw new Error('The transaction cannot be cancelled');
         
         // Actualizamos el estado a cancelada
         const transaccionActualizada = await update(transaccionId, 'cancelada');
@@ -143,7 +143,7 @@ export const cancelarTransaccion = async (req, res) => {
         const dataNotificacion = {
             tipo: 'transaccion_actualizada',
             usuario: otroUsuario,
-            mensaje: "Tu solicitud ha sido cancelada",
+            mensaje: "Your request has been cancelled",
             enlace: `/anuncios/${transaccion.anuncio}`
         }
         await createNotificacion(dataNotificacion);
@@ -168,15 +168,15 @@ export const completarTransaccion = async (req, res) => {
         const transaccion = await findTransaccionId(transaccionId);
 
         // Validamos que el usuario es parte de la transacción y que está aceptada
-        if (usuario !== transaccion.oferente && usuario !== transaccion.solicitante) throw new Error('No autorizado');
-        if (transaccion.estado !== 'aceptada') throw new Error('La transacción no está aceptada');
+        if (usuario !== transaccion.oferente && usuario !== transaccion.solicitante) throw new Error('Not authorized');
+        if (transaccion.estado !== 'aceptada') throw new Error('The transaction is not accepted');
 
         // Determinamos qué campo de confirmación corresponde al usuario actual
         const esOferente = usuario === transaccion.oferente;
         const campo = esOferente ? 'confirmado_oferente' : 'confirmado_solicitante';
 
         // Comprobamos que el usuario no haya confirmado ya
-        if (transaccion[campo]) throw new Error('Ya has confirmado esta transacción');
+        if (transaccion[campo]) throw new Error('You have already confirmed this transaction');
 
         // Guardamos la confirmación de esta parte
         let transaccionActualizada = await updateData(transaccionId, { [campo]: true });
@@ -200,13 +200,13 @@ export const completarTransaccion = async (req, res) => {
             await createNotificacion({
                 tipo: 'transaccion_actualizada',
                 usuario: transaccion.oferente,
-                mensaje: '¡Transacción completada! Ambas partes han confirmado.',
+                mensaje: 'Transaction completed! Both parties have confirmed.',
                 enlace: `/anuncios/${transaccion.anuncio}`
             });
             await createNotificacion({
                 tipo: 'transaccion_actualizada',
                 usuario: transaccion.solicitante,
-                mensaje: '¡Transacción completada! Ambas partes han confirmado.',
+                mensaje: 'Transaction completed! Both parties have confirmed.',
                 enlace: `/anuncios/${transaccion.anuncio}`
             });
 
@@ -219,7 +219,7 @@ export const completarTransaccion = async (req, res) => {
             await createNotificacion({
                 tipo: 'transaccion_actualizada',
                 usuario: otroUsuario,
-                mensaje: 'La otra parte ha confirmado la transacción. ¡Confirma tú también para completarla!',
+                mensaje: 'The other party has confirmed the transaction. Confirm too to complete it!',
                 enlace: `/anuncios/${transaccion.anuncio}`
             });
         }
