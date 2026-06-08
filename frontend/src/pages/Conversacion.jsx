@@ -77,12 +77,12 @@ export const Conversacion = () => {
 
     // Formatea la hora del mensaje
     const formatearHora = (fecha) => {
-        return new Date(fecha).toLocaleTimeString('es-ES', { hour: '2-digit', minute: '2-digit' });
+        return new Date(fecha).toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' });
     };
 
     // Agrupa los mensajes por fecha para mostrar separadores de día
     const formatearFechaSeparador = (fecha) => {
-        return new Date(fecha).toLocaleDateString('es-ES', {
+        return new Date(fecha).toLocaleDateString('en-US', {
             weekday: 'long', day: 'numeric', month: 'long'
         });
     };

@@ -74,7 +74,7 @@ export const Notificaciones = () => {
                 key={notificacion.id} 
                 button onClick={() => handleClick(notificacion)}
                 sx={{ backgroundColor: notificacion.leida ? '#FAE8CA' : '#B8946E'}}>
-                <ListItemText primary={notificacion.mensaje} secondary={new Date(notificacion.fecha_creacion).toLocaleString('es-ES')}></ListItemText>
+                <ListItemText primary={notificacion.mensaje} secondary={new Date(notificacion.fecha_creacion).toLocaleString('en-US')}></ListItemText>
                 </ListItem>
             )}</List>
             </Box>
