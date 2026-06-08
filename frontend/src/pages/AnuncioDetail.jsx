@@ -253,7 +253,7 @@ export const AnuncioDetail = () => {
                     <strong>Username:</strong> {anuncio.usuario_id.nombre_usuario}
                 </Typography>
                 <Typography variant="body1">
-                    <strong>Location:</strong> {anuncio.usuario_id.ciudad}, {anuncio.usuario_id.provincia}
+                    <strong>Location:</strong> {anuncio.usuario_id.ciudad}{anuncio.usuario_id.provincia}
                 </Typography>
             </Paper>
 

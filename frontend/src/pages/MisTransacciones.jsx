@@ -109,7 +109,9 @@ export const MisTransacciones = () => {
                 {/* Mensaje si no hay transacciones */}
                 {transaccionesFiltradas.length === 0 && !error && (
                     <Alert severity="info" sx={{mt: 3, width: 400}}>
-                        No transactions {filtroEstado === 'todas' ? '' : filtroEstado + 's'}.
+                        {filtroEstado === 'todas' 
+                        ? 'No transactions' 
+                        : `No ${ {pendiente: 'pending', aceptada: 'accepted', completada: 'complete'}[filtroEstado] } transactions`}.
                     </Alert>
                 )}
 
