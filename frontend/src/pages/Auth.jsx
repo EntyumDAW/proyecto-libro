@@ -47,7 +47,7 @@ export const AuthPage = () => {
                     centered
                     sx={{ mb: 3, borderBottom: 1, borderColor: 'divider' }}
                     >
-                    <Tab label="Loin" />
+                    <Tab label="Login" />
                     <Tab label="Register" />
                 </Tabs>
 

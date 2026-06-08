@@ -11,6 +11,7 @@ import UsuarioRoutes from './routes/usuarioRoutes.js';
 import FavoritoRoutes from './routes/favoritoRoutes.js';
 import MensajeRoutes from './routes/mensajeRoutes.js';
 import cors from 'cors';
+import prisma from "./config/db.js";
 
 // Iniciamos express
 const app = express();
@@ -66,8 +67,17 @@ app.use('/api/favoritos', FavoritoRoutes);
 // Mensajería
 app.use('/api/mensajes', MensajeRoutes);
 
-// Health check
-app.get('/health', (req, res) => res.status(200).json({ status: 'ok' }));
+// Health check (toca BD para mantener viva Supabase)
+app.get('/health', async (req, res) => {
+    try {
+        const inicio = Date.now();
+        await prisma.$queryRaw`SELECT 1`;
+        const dbMs = Date.now() - inicio;
+        res.status(200).json({ status: 'ok', db: 'ok', dbMs });
+    } catch (err) {
+        res.status(503).json({ status: 'error', db: 'down' });
+    }
+});
 
 // errorHandler para 500.
 app.use(errorHandler);

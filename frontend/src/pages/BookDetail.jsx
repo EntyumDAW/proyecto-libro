@@ -106,7 +106,7 @@ export const BookDetail = () => {
                         <Box sx={{mt: 3, display: 'flex', flexDirection: {xs: 'column', sm: 'row'}, gap: 2, alignItems: 'center'}}>
                         {/* Botón de favorito - solo visible si el usuario está autenticado */}
                         {user && (
-                            <Tooltip title={esFavorito ? 'Quitar de favoritos' : 'Añadir a favoritos'}>
+                            <Tooltip title={esFavorito ? 'Remove from favorites' : 'Add to favorites'}>
                                 <IconButton onClick={handleToggleFavorito} disabled={cargandoFav}>
                                     {esFavorito
                                         ? <Favorite sx={{color: '#e53935', fontSize: 28}}/>

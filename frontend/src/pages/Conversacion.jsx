@@ -118,7 +118,7 @@ export const Conversacion = () => {
                     )}
                     {!otroUsuario && (
                         <Typography fontWeight="bold" color="text.secondary">
-                            Conversación nueva
+                            New conversation
                         </Typography>
                     )}
                 </Paper>
@@ -139,7 +139,7 @@ export const Conversacion = () => {
                 >
                     {mensajes.length === 0 && (
                         <Typography textAlign="center" color="text.secondary" sx={{ mt: 4 }}>
-                            Sé el primero en escribir un mensaje
+                            Be the first to write a message
                         </Typography>
                     )}
 

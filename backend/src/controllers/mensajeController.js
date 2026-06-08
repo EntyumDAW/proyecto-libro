@@ -22,8 +22,8 @@ export const iniciarConversacion = async (req, res) => {
     try {
         const { otro_usuario_id, transaccion_id } = req.body;
 
-        if (!otro_usuario_id) throw new Error('Falta el ID del otro usuario');
-        if (Number(otro_usuario_id) === req.user.id) throw new Error('No puedes enviarte mensajes a ti mismo');
+        if (!otro_usuario_id) throw new Error('The other users ID is missing');
+        if (Number(otro_usuario_id) === req.user.id) throw new Error('You cant send messages to yourself');
 
         const conversacion = await getOrCreateConversacion(
             req.user.id,

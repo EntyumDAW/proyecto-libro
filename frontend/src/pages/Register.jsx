@@ -55,7 +55,7 @@ export const Register = () => {
         // Y ahora el return con el componente de MUI
     return <Container maxWidth='sm'>
         <Box component='form' onSubmit={handleSubmit} sx={{mt: 4, display: 'flex', flexDirection: 'column', gap: 2}}>
-            <Typography variant="h4">Registro</Typography>
+            <Typography variant="h4">Register</Typography>
 
             <TextField 
                 onChange={e => setNombreUsuario(e.target.value)}

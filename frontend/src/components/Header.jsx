@@ -110,7 +110,7 @@ export const Header = ({onSearch}) => {
                     <TextField
                         fullWidth
                         size='small'
-                        placeholder='Buscar libros...'
+                        placeholder='Search books...'
                         value={query}
                         onChange={(e) => setQuery(e.target.value)}
                         sx={{

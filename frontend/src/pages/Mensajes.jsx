@@ -34,10 +34,10 @@ export const Mensajes = () => {
         const diffHoras = Math.floor(diffMs / (1000 * 60 * 60));
         const diffDias = Math.floor(diffHoras / 24);
 
-        if (diffHoras < 1) return 'Ahora';
-        if (diffHoras < 24) return `Hace ${diffHoras}h`;
-        if (diffDias < 7) return `Hace ${diffDias}d`;
-        return fecha_msg.toLocaleDateString('es-ES');
+        if (diffHoras < 1) return 'Now';
+        if (diffHoras < 24) return `${diffHoras}h ago`;
+        if (diffDias < 7) return `${diffDias}d ago`;
+        return fecha_msg.toLocaleDateString('en-US');
     };
 
     // Determina el otro usuario en la conversación (no el autenticado)
@@ -59,7 +59,7 @@ export const Mensajes = () => {
         <PageLayout>
             <Box sx={{ maxWidth: 700, mx: 'auto', width: '100%', py: 4 }}>
                 <Typography variant="h4" sx={{ mb: 4, textAlign: 'center' }}>
-                    Mensajes
+                    Messages
                 </Typography>
 
                 {error && <Alert severity="error" sx={{ mb: 2 }}>{error}</Alert>}
@@ -68,10 +68,10 @@ export const Mensajes = () => {
                     <Box sx={{ textAlign: 'center', mt: 8 }}>
                         <Chat sx={{ fontSize: 64, color: 'text.disabled', mb: 2 }} />
                         <Typography variant="h6" color="text.secondary">
-                            No tienes conversaciones aún
+                            You don't have any conversations yet
                         </Typography>
                         <Typography variant="body2" color="text.secondary" sx={{ mt: 1 }}>
-                            Contacta con un vendedor desde el detalle de un anuncio
+                            Contact a seller from a listing's details
                         </Typography>
                     </Box>
                 )}
@@ -121,8 +121,8 @@ export const Mensajes = () => {
                                                     sx={{ maxWidth: 400 }}
                                                 >
                                                     {ultimoMsg
-                                                        ? (ultimoMsg.remitente === user?.id ? 'Tú: ' : '') + ultimoMsg.contenido
-                                                        : 'Conversación nueva'
+                                                        ? (ultimoMsg.remitente === user?.id ? 'You: ' : '') + ultimoMsg.contenido
+                                                        : 'New conversation'
                                                     }
                                                 </Typography>
                                             }

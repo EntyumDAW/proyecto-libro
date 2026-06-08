@@ -121,7 +121,7 @@ return (
                     <Button onClick={() => setOpen(false)}>Back</Button>
                     {/* Botón de favorito - solo visible si el usuario está autenticado */}
                     {user && (
-                        <Tooltip title={esFavorito ? 'Quitar de favoritos' : 'Añadir a favoritos'}>
+                        <Tooltip title={esFavorito ? 'Remove from favorites' : 'Add to favorites'}>
                             <IconButton onClick={handleToggleFavorito} disabled={cargandoFav} size="small">
                                 {esFavorito
                                     ? <Favorite sx={{color: '#e53935'}}/>

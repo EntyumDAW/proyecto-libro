@@ -34,7 +34,7 @@ export const MisFavoritos = () => {
         <PageLayout>
             <Box sx={{ maxWidth: '1600px', mx: 'auto', width: '100%' }}>
                 <Typography variant="h4" sx={{ my: 4, textAlign: 'center' }}>
-                    Mis favoritos
+                    My favorites
                 </Typography>
 
                 {error && <Alert severity="error" sx={{ mb: 2 }}>{error}</Alert>}
@@ -43,10 +43,10 @@ export const MisFavoritos = () => {
                     <Box sx={{ textAlign: 'center', mt: 8 }}>
                         <Favorite sx={{ fontSize: 64, color: 'text.disabled', mb: 2 }} />
                         <Typography variant="h6" color="text.secondary">
-                            Aún no tienes libros favoritos
+                            You don't have any favorite books yet
                         </Typography>
                         <Typography variant="body2" color="text.secondary" sx={{ mt: 1 }}>
-                            Marca libros con el corazón para guardarlos aquí
+                            Mark books with the heart to save them here
                         </Typography>
                     </Box>
                 )}
@@ -65,7 +65,7 @@ export const MisFavoritos = () => {
                                 }}
                             >
                                 {/* Botón de eliminar favorito */}
-                                <Tooltip title="Quitar de favoritos">
+                                <Tooltip title="Remove from favorites">
                                     <IconButton
                                         onClick={() => handleEliminar(favorito.libro_ref)}
                                         sx={{
