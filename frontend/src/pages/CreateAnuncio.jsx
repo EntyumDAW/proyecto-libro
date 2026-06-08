@@ -182,7 +182,7 @@ export const CreateAnuncioModal = ({open, onClose, libroData}) => {
     // Hacemos el return con el modal y ejemplar, etc...
     // Primero le preguntamos por el ejemplar y luego le damos la opción de cambiar datos del anuncio y de rellenar lo que falte
     return <Dialog open={open} onClose={onClose} maxWidth="sm" fullWidth>
-        <DialogTitle sx={{backgroundColor: '#F3DAAF'}}>Crear Anuncio</DialogTitle>
+        <DialogTitle sx={{backgroundColor: '#F3DAAF'}}>Create listing</DialogTitle>
         <DialogContent sx={{backgroundColor: '#F3DAAF'}}>
 
         {loadingEjemplares ? (
@@ -191,7 +191,7 @@ export const CreateAnuncioModal = ({open, onClose, libroData}) => {
             <>
                 <FormControl component="fieldset" fullWidth margin="normal">
                     <Typography variant="subtitle1" gutterBottom>
-                        Ya tienes {ejemplaresExistentes.length} ejemplar(es) de este libro
+                        You already have {ejemplaresExistentes.length} copy(ies) of this book
                     </Typography>
                     <RadioGroup
                         value={modoEjemplar}
