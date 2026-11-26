@@ -46,6 +46,76 @@ Frontend (React + Nginx) ──▶ Backend (Express) ──▶ PostgreSQL (Prism
                            Google Books API
 ```
 
+<details>
+<summary><b>Endpoints de la API</b></summary>
+
+Todos llevan el prefijo `/api`, salvo `/health`.
+
+| Método | Endpoint | Auth | Descripción |
+|--------|----------|------|-------------|
+| `POST` | `/auth/register` | — | Registrar un usuario |
+| `POST` | `/auth/login` | — | Iniciar sesión y obtener el JWT |
+| `GET` | `/libros/search?q=` | — | Buscar libros en Google Books |
+| `GET` | `/libros/:id` | — | Detalle de un libro por ISBN o ID de Google |
+| `POST` | `/libros/nuevo-libro` | ✓ | Crear un libro manualmente |
+| `GET` | `/categorias` | — | Listar categorías |
+| `POST` | `/categorias/nueva` | ✓ | Crear una categoría |
+| `GET` | `/ejemplares/mis-ejemplares` | ✓ | Ejemplares del usuario |
+| `GET` | `/ejemplares/:libro_id` | — | Ejemplares de un libro |
+| `POST` | `/ejemplares/crear-ejemplar` | ✓ | Añadir un ejemplar |
+| `PUT` | `/ejemplares/actualizar-ejemplar/:id` | ✓ | Editar un ejemplar |
+| `DELETE` | `/ejemplares/borrar-ejemplar/:id` | ✓ | Borrar un ejemplar |
+| `GET` | `/anuncios` | — | Ver anuncios activos |
+| `GET` | `/anuncios/mis-anuncios` | ✓ | Anuncios del usuario |
+| `GET` | `/anuncios/:id` | — | Detalle de un anuncio |
+| `POST` | `/anuncios/crear-anuncio` | ✓ | Crear un anuncio |
+| `PUT` | `/anuncios/actualizar-anuncio/:id` | ✓ | Editar un anuncio |
+| `DELETE` | `/anuncios/borrar-anuncio/:id` | ✓ | Borrar un anuncio |
+| `POST` | `/transacciones` | ✓ | Iniciar una transacción |
+| `GET` | `/transacciones/mis-transacciones` | ✓ | Transacciones del usuario |
+| `PUT` | `/transacciones/:id/aceptar` | ✓ | Aceptar una transacción |
+| `PUT` | `/transacciones/:id/cancelar` | ✓ | Cancelar una transacción |
+| `PUT` | `/transacciones/:id/completar` | ✓ | Confirmar que se ha completado |
+| `GET` | `/notificaciones` | ✓ | Notificaciones del usuario |
+| `GET` | `/notificaciones/no-leidas` | ✓ | Número de notificaciones sin leer |
+| `PUT` | `/notificaciones/:id/leida` | ✓ | Marcar una como leída |
+| `PUT` | `/notificaciones/todas-leidas` | ✓ | Marcar todas como leídas |
+| `GET` | `/perfil` | ✓ | Ver perfil |
+| `PUT` | `/perfil/actualizar-perfil` | ✓ | Editar perfil |
+| `PUT` | `/perfil/cambiar-password` | ✓ | Cambiar contraseña |
+| `GET` | `/favoritos` | ✓ | Listar favoritos |
+| `POST` | `/favoritos/toggle` | ✓ | Añadir o quitar un favorito |
+| `GET` | `/favoritos/:libroRef` | ✓ | Comprobar si un libro es favorito |
+| `GET` | `/mensajes/no-leidos` | ✓ | Número de mensajes sin leer |
+| `GET` | `/mensajes/conversaciones` | ✓ | Listar conversaciones |
+| `POST` | `/mensajes/conversaciones` | ✓ | Iniciar una conversación |
+| `GET` | `/mensajes/conversaciones/:id` | ✓ | Mensajes de una conversación |
+| `POST` | `/mensajes/conversaciones/:id/mensajes` | ✓ | Enviar un mensaje |
+| `GET` | `/health` | — | Estado del servidor y la base de datos |
+
+</details>
+
+<details>
+<summary><b>Modelo de datos</b></summary>
+
+| Modelo | Descripción |
+|-------|-------------|
+| `usuario` | Cuentas de usuario con perfil y rol (usuario/admin) |
+| `libros` | Datos del libro (ISBN, título, autor, sinopsis, portada) |
+| `ejemplares` | Copias físicas de cada usuario |
+| `anuncio` | Anuncios de venta o intercambio de un ejemplar |
+| `intercambio_deseado` | Libros que se aceptan a cambio en un anuncio |
+| `transacciones` | Transacción entre dos usuarios |
+| `transporte` | Datos de envío de una transacción |
+| `conversacion` | Conversación 1 a 1 (única por pareja de usuarios) |
+| `mensaje` | Mensaje cifrado dentro de una conversación |
+| `notificaciones` | Notificaciones de cada usuario |
+| `favorito` | Libros guardados por usuario |
+| `categorias` | Categorías jerárquicas |
+| `libro_categoria` | Relación entre libros y categorías |
+
+</details>
+
 ## Ejecutar en local
 
 ```bash
