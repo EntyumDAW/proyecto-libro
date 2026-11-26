@@ -75,11 +75,11 @@ describe('GET /api/libros/search', () => {
         expect(res.body.every(b => b.titulo)).toBe(true);
     });
 
-    it('returns portada_url using zoom=1', async () => {
+    it('returns portada_url using zoom=2', async () => {
         searchBooks.mockResolvedValue([mockGoogleBook()]);
         const res = await request(app).get('/api/libros/search?q=test');
         expect(res.status).toBe(200);
-        expect(res.body[0].portada_url).toContain('zoom=1');
+        expect(res.body[0].portada_url).toContain('zoom=2');
     });
 
     it('returns 400 when Google API fails', async () => {
